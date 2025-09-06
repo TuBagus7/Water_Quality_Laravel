@@ -108,27 +108,29 @@
                 </div>
             </div>
         </section>
-    </main>
+    </main
+in>
 
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script>
-        const host = 'wss://skripsi.cloud.shiftr.io:443';
-        const clientId = Math.random().toString(16).substr(2, 8);
+        //const host = "wss://skripsi.cloud.shiftr.io:443";
+        const host = "wss://test.mosquitto.org:8081/mqtt";
+        const clientId = "webclient-" + Math.random().toString(16).substr(2, 8);
 
         const options = {
             keepalive: 30,
             clientId: clientId,
-            username: 'skripsi',
-            password: 'skripsimusto',
-            protocolId: 'MQTT',
-            protocolVersion: 4,
+            // username: 'skripsi',
+            // password: 'skripsimusto',
+            // protocolId: 'MQTT',
+            // protocolVersion: 4,
             clean: true,
             reconnectPeriod: 1000,
             connectTimeout: 30 * 1000
         };
 
         const client = mqtt.connect(host, options);
-
+    
         client.on('connect', () => {
             console.log('Berhasil Terhubung ke Broker MQTT');
             document.getElementById('status').innerHTML = 'Terhubung';
@@ -161,14 +163,13 @@
             }
 
             if(topic == "musto/status/123456789"){
-                document.getElementById('status-123456789').innerHTML = message;
-                
+                document.getElementById('status-123456789').innerHTML = message;  
                 if(message == "Online"){
                     document.getElementById('status-123456789').classList.remove('offline');
                     document.getElementById('status-123456789').classList.add('online');
                 } else {
-                    document.getElementById('status-123456789').classList.add('offline');
                     document.getElementById('status-123456789').classList.remove('online');
+                    document.getElementById('status-123456789').classList.add('offline');
                 }
             }
         });
