@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/app.css')
+
     <title>Dashboard IoT</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
@@ -48,11 +50,15 @@
         .offline { color: red; font-weight: bold; }
     </style>
 </head>
-<body>
+<body class="bg-blue-500">
     <main>
         <section>
+           <div class="bg-blue-500 text-white p-4 text-center font-bold">
+  Tes Warna Tailwind
+</div>
+
             <div class="container">
-                <h1 class="header-text">
+                <h1 class="header-text text-3xl font-bold underline">
                     Dashboard IoT <span id="status">Terputus</span>
                 </h1>
 
@@ -108,8 +114,7 @@
                 </div>
             </div>
         </section>
-    </main
-in>
+    </main>
 
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script>
