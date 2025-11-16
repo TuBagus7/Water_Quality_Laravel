@@ -4,27 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=login" />
     <title>Dashboard IoT</title>
     <style>
-    * {
-            margin: 0;
-            padding: 0;
+    *   {
+            margin: 5px;
+            padding:0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f0f2f5, #dfe6e9);
+            background: linear-gradient(135deg, #f0f2f5, #d9dde3);
             color: #333;
-        }
-
-        nav{
-            background-color: #4a90e2;
-            color:black
-            padding: 0 0;
-            margin-bottom: 30px;
-
         }
 
         .container {
@@ -36,7 +28,6 @@
         .header-text {
             text-align: center;
             font-size: 28px;
-            margin-bottom: 20px;
         }
 
         #status {
@@ -53,22 +44,67 @@
         .card-wrapper { 
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px; 
+            gap: 5px;
+            margin-bottom: 30px;  
             justify-content: center; 
         }
-        .card {
+        .card-suhu {
             flex: 1 1 calc(20% - 20px);
             min-width: 180px;
             padding: 20px;
             border-radius: 12px;
             /* background: white; */
-            background: radial-gradient(circle,rgba(238,174,202,1)0%, rgba(148,187,233,1)100%);
+            background: linear-gradient(135deg, #FFD3A5, #FD6585);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+        .card-ph {
+            flex: 1 1 calc(20% - 20px);
+            min-width: 180px;
+            padding: 20px;
+            border-radius: 12px;
+            /* background: white; */
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-tbdy {
+            flex: 1 1 calc(20% - 20px);
+            min-width: 180px;
+            padding: 20px;
+            border-radius: 12px;
+            /* background: white; */
+            background: radial-gradient(circle, #e3c995, #a88445);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-percent {
+            flex: 1 1 calc(20% - 20px);
+            min-width: 180px;
+            padding: 20px;
+            border-radius: 12px;
+            /* background: white; */
+            background: radial-gradient(circle, #a8cff9 0%, #a58fe9 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-quality {
+            flex: 1 1 calc(20% - 20px);
+            min-width: 180px;
+            padding: 20px;
+            border-radius: 12px;
+            /* background: white; */
+            background: linear-gradient(135deg, #a8e6cf 0%, #56b892 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card-suhu:hover, .card-ph:hover,.card-tbdy:hover,.card-percent:hover,.card-quality:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
         .icon { font-size: 30px; margin-bottom: 10px; }
         .card h3 { font-size: 18px; margin-bottom: 8px; }
         .card p { font-size: 16px; color: #555; }
@@ -98,7 +134,10 @@
         
             <div class="container-title">
                 <h1 class="header-text text-3xl font-bold ">Musto Monitoring Air Quality 
-                    <p style="float:right"><a href="{{route('login')}}">Login</p>
+                    <p style="float:right" ><a href="{{route('login')}}"><span class="material-symbols-outlined">
+                        login
+                    </span>
+                    </p>
                     <br>
                     <span id="status">Terputus</span>
                 </h1>
@@ -107,27 +146,27 @@
 
                 <!-- Cards with Icons -->
                 <div class="card-wrapper">
-                    <div class="card">
+                    <div class="card-suhu">
                         <div class="icon">🌡️</div>
                         <h3>Suhu Air</h3>
                         <p><span id="suhu">?</span> °C</p>
                     </div>
-                    <div class="card">
+                    <div class="card-ph">
                         <div class="icon">💧</div>
                         <h3>pH Air</h3>
                         <p><span id="ph">?</span></p>
                     </div>
-                    <div class="card">
+                    <div class="card-tbdy">
                         <div class="icon">🌫️</div>
                         <h3>Kekeruhan Air</h3>
                         <p><span id="tbdy">?</span></p>
                     </div>
-                    <div class="card">
+                    <div class="card-percent">
                         <div class="icon">📊</div>
                         <h3>Persentase</h3>
                         <p><span id="percent">?</span>%</p>
                     </div>
-                    <div class="card">
+                    <div class="card-quality">
                         <div class="icon">🧪</div>
                         <h3>Kualitas Air</h3>
                         <p><span id="quality">?</span></p>

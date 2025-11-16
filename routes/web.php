@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     }
 // });
 
-Route::get('/', [DashboardController::class, 'publicDashboardView']);
+Route::get('/', [DashboardController::class, 'publicDashboardView'])->name('public-dashboard');
 
 // Route::get('/test', function () {
 //     $data = ["Apel", "Pisang", "Mangga"];
