@@ -1,0 +1,14 @@
+How to auto update ini Laravel :
+before you add auto update follow the requirement:
+- install node js on your computer
+- npm install 
+- npm install laravel-mix@latest --save-dev
+- create file on root your laravel project: 
+        "sripts":{
+            "watch":"mix watch"
+        }
+Run laravel project 
+- php artisan serve
+
+To update laravel project auto when you make changes run in another terminal:
+- npm run watch
