@@ -7,21 +7,63 @@
 
     <title>Dashboard IoT</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: linear-gradient(135deg, #f0f2f5, #dfe6e9); color: #333; }
-        .container { padding: 40px; max-width: 1200px; margin: auto; }
-        .header-text { text-align: center; font-size: 28px; margin-bottom: 20px; }
-        #status { font-size: 14px; padding: 5px 10px; border-radius: 6px; background-color: #ffcccc; }
-        .connected { background-color: #c8e6c9; }
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
+        body {
+            background: linear-gradient(135deg, #f0f2f5, #dfe6e9);
+            color: #333;
+        }
+
+        nav{
+            background-color: #4a90e2;
+            color:black
+            padding: 0 0;
+            margin-bottom: 30px;
+
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header-text {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        #status {
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            background-color: #ffcccc;
+        }
+
+        .connected {
+            background-color: #c8e6c9;
+        }
         /* Card */
-        .card-wrapper { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 30px; justify-content: center; }
+        .card-wrapper { 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px; 
+            justify-content: center; 
+        }
         .card {
             flex: 1 1 calc(20% - 20px);
             min-width: 180px;
             padding: 20px;
             border-radius: 12px;
-            background: white;
+            /* background: white; */
+            background: radial-gradient(circle,rgba(238,174,202,1)0%, rgba(148,187,233,1)100%);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -50,17 +92,18 @@
         .offline { color: red; font-weight: bold; }
     </style>
 </head>
-<body class="bg-blue-500">
+<body>
     <main>
         <section>
-           <div class="bg-blue-500 text-white p-4 text-center font-bold">
-  Tes Warna Tailwind
-</div>
-
-            <div class="container">
-                <h1 class="header-text text-3xl font-bold underline">
-                    Dashboard IoT <span id="status">Terputus</span>
+        
+            <div class="container-title">
+                <h1 class="header-text text-3xl font-bold ">Musto Monitoring Air Quality 
+                    <p style="float:right"><a href="{{route('login')}}">Login</p>
+                    <br>
+                    <span id="status">Terputus</span>
                 </h1>
+            </div>
+            
 
                 <!-- Cards with Icons -->
                 <div class="card-wrapper">

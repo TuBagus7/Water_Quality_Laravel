@@ -21,14 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'publicDashboardView']);
 
-Route::get('/test', function () {
-    $data = ["Apel", "Pisang", "Mangga"];
-    dd($data);
-});
+// Route::get('/test', function () {
+//     $data = ["Apel", "Pisang", "Mangga"];
+//     dd($data);
+// });
 
-Route::get('/beranda', function () {
-    return view('beranda');
-});
+// Route::get('/beranda', function () {
+//     return view('beranda');
+// });
 
 Route::middleware('is-login')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +44,10 @@
                                 <a href="/register">Daftarkan akun?</a>
                             </div>
                         </form>
+
+                        <a href="{{route('public-dashboard')}}">Beranda</a>
+                        <div>
+                        </div>
                     </div>
                 </div>
             </div>
