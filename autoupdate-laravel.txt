@@ -3,12 +3,17 @@ before you add auto update follow the requirement:
 - install node js on your computer
 - npm install 
 - npm install laravel-mix@latest --save-dev
-- create file on root your laravel project: 
+- create file package.json on root your laravel project if exist package.json add this code: 
         "sripts":{
             "watch":"mix watch"
         }
+
+Open your terminal and run this command:
 Run laravel project 
 - php artisan serve
 
+Open another terminal and run this command:
 To update laravel project auto when you make changes run in another terminal:
 - npm run watch
+if not work try this command:
+- npm run dev
