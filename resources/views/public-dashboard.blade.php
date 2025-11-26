@@ -260,6 +260,36 @@
                     document.getElementById('status-123456789').classList.add('offline');
                 }
             }
+
+            if(topic == "musto/monitoring"){
+                try {
+                    const data = JSON.parse(message.toString());
+                    // Update UI elements with data from JSON
+                    if(data.suhu !== undefined) document.getElementById('suhu').innerHTML = data.suhu;
+                    if(data.ph !== undefined) document.getElementById('ph').innerHTML = data.ph;
+                    if(data.tbdy !== undefined) document.getElementById('tbdy').innerHTML = data.tbdy; // Removed + '°' as it might not be needed or added elsewhere, keeping consistent with original logic if possible, but user request implied just data. Original code had + '°' for tbdy. Let's keep it safe.
+                    // Actually, original code for tbdy had + '°'. Let's add it back if it's a number.
+                    if(data.tbdy !== undefined) document.getElementById('tbdy').innerHTML = data.tbdy + '°';
+
+                    if(data.bobot !== undefined) document.getElementById('percent').innerHTML = data.bobot;
+                    if(data.quality !== undefined) document.getElementById('quality').innerHTML = data.quality;
+                    
+                    if(data.status !== undefined) {
+                        document.getElementById('status-123456789').innerHTML = data.status;
+                        if(data.status == "Online"){
+                            document.getElementById('status-123456789').classList.remove('offline');
+                            document.getElementById('status-123456789').classList.add('online');
+                        } else {
+                            document.getElementById('status-123456789').classList.remove('online');
+                            document.getElementById('status-123456789').classList.add('offline');
+                        }
+                    }
+
+                    console.log("JSON Data received:", data);
+                } catch (e) {
+                    console.error("Error parsing JSON:", e);
+                }
+            }
         });
 
         // const inputServo = document.getElementById('inputServo');

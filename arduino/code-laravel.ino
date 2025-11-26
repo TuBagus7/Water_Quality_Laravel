@@ -72,6 +72,9 @@ const char* topic_tbdy = "musto/tbdy";
 const char* topic_bobot = "musto/percent";
 const char* topic_result = "musto/quality";
 const char* topic_status = "musto/status/123456789";
+const char* topic_json = "musto/monitoring";
+
+String qualityMsg = "Waiting...";
 
 
 void rgb (bool red, bool green, bool yellow){ 
@@ -103,14 +106,14 @@ void temperature() {
 }
 
 void pH_Sensor() {
-  // nilai_analog_PH = analogRead(ph_Pin);
-  // TeganganPh = 3.3 / 4096.0 * nilai_analog_PH;
-  // PH_step = (PH4 - PH7) / 3;
-  // Po = 7.00 + ((PH7 - TeganganPh) / PH_step);     
+  nilai_analog_PH = analogRead(ph_Pin);
+  TeganganPh = 3.3 / 4096.0 * nilai_analog_PH;
+  PH_step = (PH4 - PH7) / 3;
+  Po = 7.00 + ((PH7 - TeganganPh) / PH_step);     
 
   //Test Data Dummy
   // Po = random(0, 8);
-  Po = 7;
+  // Po = 7;
 
   Serial.println("🧪 Sensor pH");
   //mqtt.publish(topic_ph,String(Po),true,1);
@@ -126,13 +129,13 @@ void pH_Sensor() {
 
 void tbdy() {
   int rawValue = analogRead(turbidityPin);
-  // ntu = map(rawValue, 1630, 0, 1, 100);
-  // ntu = 20;
-  // if (ntu < 0) ntu = 0;
+  ntu = map(rawValue, 1630, 0, 1, 100);
+  ntu = 20;
+  if (ntu < 0) ntu = 0;
 
   //test data dummy
   // ntu = random(0, 50);
-  ntu = 3;
+  // ntu = 3;
 
   Serial.println("🌫️ Sensor Kekeruhan");
   //mqtt.publish(topic_tbdy, String(ntu), true, 1);
@@ -382,6 +385,7 @@ void defuzifikasi() {
     rgb(0,1,0);//lampu led hijau menyala
     digitalWrite(buzzer,LOW);
     //topic, data, retain, qos
+    qualityMsg = "Good";
     mqtt.publish(topic_result,String("Good"),true,1);
   } else if (zTerbobot >= 31 && zTerbobot <= 70) {
     Serial.println("Sedang");
@@ -390,6 +394,7 @@ void defuzifikasi() {
     rgb(0,0,1);//lampu led kuning menyala
     digitalWrite(buzzer,LOW);
     //topic, data, retain, qos
+    qualityMsg = "Moderate";
     mqtt.publish(topic_result,String("Moderate"),true,1);
   } else if (zTerbobot >= 71) {
     Serial.println("buruk");
@@ -398,6 +403,7 @@ void defuzifikasi() {
     rgb(1,0,0);//lampu led merah menyala
     digitalWrite(buzzer,HIGH);
     //topic, data, retain, qos
+    qualityMsg = "Bad";
     mqtt.publish(topic_result,String("Bad"),true,1);
   } else {
     Serial.println("Tidak Terbobot");
@@ -415,14 +421,22 @@ void publish_data(){
   mqtt.publish(topic_tbdy, String(ntu), true, 1);
   //topic, data, retain, qos
   mqtt.publish(topic_bobot, String(zTerbobot), true, 1);
-  
-  // if(WiFi.status()==WL_CONNECTED && mqtt.isConnected()){
-  //   mqtt.publish(topic_status,"Online", false,1);
-  // }else{
-  //   Serial.println("Reconnect");
-  //   // mqtt.publish(topic_status,"Offline", false,1);
-  // }
 
+}
+
+void publish_json(){
+  String payload = "{";
+  payload += "\"suhu\":" + String(temperatureC) + ",";
+  payload += "\"ph\":" + String(Po) + ",";
+  payload += "\"tbdy\":" + String(ntu) + ",";
+  payload += "\"bobot\":" + String(zTerbobot) + ",";
+  payload += "\"quality\":\"" + qualityMsg + "\",";
+  payload += "\"status\":\"Online\"";
+  payload += "}";
+
+  // Publish to a single topic
+  // topic, data, retain, qos
+  mqtt.publish(topic_json, payload, true, 1); 
 }
 
 // void reconnect(){
