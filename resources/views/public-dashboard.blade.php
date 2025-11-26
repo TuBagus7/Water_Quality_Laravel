@@ -203,8 +203,8 @@
     /* Daftar broker MQTT
         //const host = "wss://skripsi.cloud.shiftr.io:443";
         // const host = "wss://test.mosquitto.org:8081/mqtt";
-        const host = "wss://broker.emqx.io:8084/mqtt";
     */
+        const host = "wss://broker.emqx.io:8084/mqtt";
         const clientId = "webclient-" + Math.random().toString(16).substr(2, 8);
 
         const options = {
@@ -228,43 +228,10 @@
             client.subscribe("musto/#", {qos: 1});
         });
 
-        // client.on('message', (topic, message) => {
-        //     if(topic == "musto/suhu"){
-        //         document.getElementById('suhu').innerHTML = message;
-        //         console.log(topic, message);
-        //     }
-
-        //     if(topic == "musto/ph"){
-        //         document.getElementById('ph').innerHTML = message;
-        //         console.log(topic, message);
-        //     }
-
-        //     if(topic == "musto/tbdy"){
-        //         //document.getElementById('inputServo').value = message;
-        //         document.getElementById('tbdy').innerHTML = message + '°';
-        //     }
-
-        //     if(topic == "musto/percent"){
-        //         document.getElementById('percent').innerHTML = message;
-        //     }
-
-        //     if(topic == "musto/quality"){
-        //         document.getElementById('quality').innerHTML = message;
-        //     }
-
-        //     if(topic == "musto/status/123456789"){
-        //         document.getElementById('status-123456789').innerHTML = message;  
-        //         if(message == "Online"){
-        //             document.getElementById('status-123456789').classList.remove('offline');
-        //             document.getElementById('status-123456789').classList.add('online');
-        //         } else{
-        //             document.getElementById('status-123456789').classList.remove('online');
-        //             document.getElementById('status-123456789').classList.add('offline');
-        //         }
-        //     }
-
+        client.on('message', (topic, message) => {
             if(topic == "musto/monitoring"){
                 try {
+                    //Parsing (parse) JSON: Mengubah pesan teks dari MQTT menjadi data yang bisa di baca 
                     const data = JSON.parse(message.toString());
                     // Update UI elements with data from JSON
                     if(data.suhu !== undefined) document.getElementById('suhu').innerHTML = data.suhu;
