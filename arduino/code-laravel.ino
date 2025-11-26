@@ -87,22 +87,13 @@ void rgb (bool red, bool green, bool yellow){
 //======================Function Sensor======================
 void temperature() { 
   suhu.requestTemperatures();
-  // temperatureC = suhu.getTempCByIndex(0);
-  // temperatureF = suhu.getTempFByIndex(0);
-  // temperatureC = random(0, 50);
-  // temperatureC = random(0, 50);
-  temperatureC = 5;
+  temperatureC = suhu.getTempCByIndex(0);
   Serial.println("📡 Sensor Suhu");
   Serial.print  ("  Suhu (°C)  : "); Serial.println(temperatureC);
-  // Serial.print  ("  Temp (°F)  : "); Serial.println(temperatureF);
-  //mqtt.publish(topic_suhu,String(temperatureC),true,1);
   Serial.println();
   lcd.setCursor(0,0);
   lcd.print("S:");
   lcd.print(temperatureC);
-  // lcd.setCursor(7,0);
-  // lcd.print("|");
-  
 }
 
 void pH_Sensor() {
@@ -111,12 +102,7 @@ void pH_Sensor() {
   PH_step = (PH4 - PH7) / 3;
   Po = 7.00 + ((PH7 - TeganganPh) / PH_step);     
 
-  //Test Data Dummy
-  // Po = random(0, 8);
-  // Po = 7;
-
   Serial.println("🧪 Sensor pH");
-  //mqtt.publish(topic_ph,String(Po),true,1);
   Serial.print  ("  Tegangan   : "); Serial.println(TeganganPh, 3);
   Serial.print  ("  ADC Value  : "); Serial.println(nilai_analog_PH);
   Serial.print  ("  pH         : "); Serial.println(Po );
@@ -133,12 +119,7 @@ void tbdy() {
   ntu = 20;
   if (ntu < 0) ntu = 0;
 
-  //test data dummy
-  // ntu = random(0, 50);
-  // ntu = 3;
-
   Serial.println("🌫️ Sensor Kekeruhan");
-  //mqtt.publish(topic_tbdy, String(ntu), true, 1);
   Serial.print  ("  ADC Value  : "); Serial.println(rawValue);
   Serial.print  ("  NTU        : "); Serial.println(ntu);
   Serial.println();
@@ -369,7 +350,6 @@ void defuzifikasi() {
   Serial.print("  Persentase Kualitas Air : ");
   Serial.print(zTerbobot, 1);
   Serial.println(" %");
-  //mqtt.publish(topic_bobot,String(zTerbobot),true,1);
   lcd.setCursor(0,1);
   lcd.print("Pot:");
   lcd.setCursor(4,1);
@@ -413,17 +393,6 @@ void defuzifikasi() {
 }
 
 
-void publish_data(){
-  Serial.println("Publishh to APP........📩");
-    //topic, data, retain, qos
-  mqtt.publish(topic_suhu,String(temperatureC),true,1);
-  mqtt.publish(topic_ph,String(Po),true,1);
-  mqtt.publish(topic_tbdy, String(ntu), true, 1);
-  //topic, data, retain, qos
-  mqtt.publish(topic_bobot, String(zTerbobot), true, 1);
-
-}
-
 void publish_json(){
   String payload = "{";
   payload += "\"suhu\":" + String(temperatureC) + ",";
@@ -439,20 +408,6 @@ void publish_json(){
   mqtt.publish(topic_json, payload, true, 1); 
 }
 
-// void reconnect(){
-//   if (WiFi.status() != WL_CONNECTED) {
-//     Serial.println("WiFi Terputus! Mencoba reconnect...");
-//     connectWiFi();
-//     mqtt.publish(topic_status,"Online", false, 1);
-//   } 
-//   else if (!mqtt.connected()) {
-//     Serial.println("MQTT Terputus! Mencoba reconnect...");
-//     connectMQTT();
-//   }
-//   else{
-//     mqtt.publish(topic_status,"Offline", false, 1);
-//   }
-// }
 
 void setup(){
   Serial.begin(115200);
@@ -475,13 +430,6 @@ void setup(){
   lcd.print("Connecting to:");
   lcd.setCursor(0, 1);
   lcd.print(String("Wifi: ") + ssid);
-
-  // mqtt.setWill(topic_status, "Offline", true, 1);
-
-  // Jika kode sampai di sini, artinya koneksi berhasil
-  // lcd.clear();
-  // lcd.setCursor(0, 0);
-  // lcd.print("WiFi Connected!");
   
   // MQTT Connect
 
@@ -491,9 +439,6 @@ void setup(){
   mqtt.subscribe("musto/#");
   mqtt.publish(topic_status,"Online", false, 1);
 
-  // waktu.aturInterval(2000, publish_data);   // suhu cukup 3 detik sekali
-  // waktu.aturInterval(1000, reconnect);   // suhu cukup 3 detik sekali
-  // // Buat task untuk logika utama (setelah koneksi berhasil)
   
   xTaskCreatePinnedToCore(taskSensor, "SensorTask", 4096, NULL, 0, NULL, 0);// Tugas Sensor akan berjalan di core 0
   xTaskCreatePinnedToCore(taskFuzzyLogic, "FuzzyTask", 4096, NULL, 1, NULL, 1); // Tugas untuk FuzzyLogic akan berjalan di core 1
